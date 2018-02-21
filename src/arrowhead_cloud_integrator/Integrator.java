@@ -1,12 +1,15 @@
 package arrowhead_cloud_integrator;
 
+import arrowhead_cloud_integrator.ahf_interface.AHFBridge;
+import arrowhead_cloud_integrator.iot_cloud_drivers.CumulocityDriver;
+
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 
 public class Integrator implements Observer{
     private static Clock clk;
-    private static ServicesModel comp;
+    private static ServicesModel servicesModel;
     private static int intervall = 10000; // 10 seconds
     private static URL sdURL;
     private static URL authURL;
@@ -19,12 +22,14 @@ public class Integrator implements Observer{
     }
 
     public Integrator(){
+        CumulocityDriver cloudDriver = new CumulocityDriver(cumulocityURL, accPass, accUSER);
+        AHFBridge ahfBridge = new AHFBridge(authURL, sdURL);
         clk = new Clock(intervall, this);
-        comp = new ServicesModel(sdURL, authURL, cumulocityURL, accPass, accUSER);
+        servicesModel = new ServicesModel(cloudDriver, ahfBridge);
     }
 
     public void update(Observable observable, Object o) {
-        comp.updateServices();
-        comp.compareCumulocity();
+        servicesModel.updateServices();
+        servicesModel.compareCumulocity();
     }
 }
