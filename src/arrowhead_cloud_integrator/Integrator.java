@@ -1,6 +1,6 @@
 package arrowhead_cloud_integrator;
 
-import arrowhead_cloud_integrator.ahf_interface.AHFBridge;
+import arrowhead_cloud_integrator.ahf_interface.AhfBridge;
 import arrowhead_cloud_integrator.iot_cloud_drivers.CumulocityDriver;
 
 import java.net.URL;
@@ -23,7 +23,7 @@ public class Integrator implements Observer{
 
     public Integrator(){
         CumulocityDriver cloudDriver = new CumulocityDriver(cumulocityURL, accPass, accUSER);
-        AHFBridge ahfBridge = new AHFBridge(authURL, sdURL);
+        AhfBridge ahfBridge = new AhfBridge(authURL, sdURL);
         clk = new Clock(intervall, this);
         servicesModel = new ServicesModel(cloudDriver, ahfBridge);
     }

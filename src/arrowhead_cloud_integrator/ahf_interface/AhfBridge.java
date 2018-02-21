@@ -5,11 +5,11 @@ import arrowhead_cloud_integrator.Service;
 
 import java.net.URL;
 
-public class AHFBridge{
+public class AhfBridge {
     private URL authURL;
     private URL sdURL;
 
-    public AHFBridge(URL authURL, URL sdURL){
+    public AhfBridge(URL authURL, URL sdURL){
         this.authURL = authURL;
         this.sdURL = sdURL;
     }
