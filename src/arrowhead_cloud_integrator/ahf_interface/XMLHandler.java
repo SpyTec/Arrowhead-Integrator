@@ -1,4 +1,4 @@
-package comm;
+package arrowhead_cloud_integrator.ahf_interface;
 
 import javax.swing.text.Document;
 

@@ -1,4 +1,4 @@
-package comm;
+package arrowhead_cloud_integrator;
 
     public class Service {
     private String domain, host, name, port, type;

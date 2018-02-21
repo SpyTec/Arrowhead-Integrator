@@ -1,6 +1,4 @@
-package model;
-
-import main.Integrator;
+package arrowhead_cloud_integrator;
 
 import java.util.Observable;
 import java.util.Timer;

@@ -1,8 +1,8 @@
-package comm;
+package arrowhead_cloud_integrator.ahf_interface;
 
 import java.net.URL;
 
-public class Communication {
+public class AhfRouter {
     private URL sdURL;
     private URL authURL;
 

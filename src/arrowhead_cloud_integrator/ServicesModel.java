@@ -1,14 +1,13 @@
-package model;
+package arrowhead_cloud_integrator;
 
-import bridge.AHFBridge;
-import bridge.CumulocityBridge;
-import comm.Service;
+import arrowhead_cloud_integrator.ahf_interface.AHFBridge;
+import arrowhead_cloud_integrator.iot_cloud_drivers.CumulocityDriver;
 
 import java.net.URL;
 
-public class Comparator {
+public class ServicesModel {
     private AHFBridge ahfBridge;
-    private CumulocityBridge cumulocityBridge;
+    private CumulocityDriver cumulocityDriver;
     private Service[] ahfServices;
     private int[] cumulocityDevices; //should take device type (NOT INT)
     private URL sdURL;
@@ -18,22 +17,23 @@ public class Comparator {
     private String accUSER;
 
 
-    public Comparator(URL sdURL, URL authURL, URL cumulocityURL, String accPass, String accUSER) {
+    public ServicesModel(URL sdURL, URL authURL, URL cumulocityURL, String accPass, String accUSER) {
         this.sdURL = sdURL;
         this.authURL = authURL;
         this.cumulocityURL = cumulocityURL;
         this.accPass = accPass;
         this.accUSER = accUSER;
         this.ahfBridge = new AHFBridge(this.authURL, this.sdURL);
-        this.cumulocityBridge = new CumulocityBridge(this.cumulocityURL, this.accPass, this.accUSER);
+        this.cumulocityDriver = new CumulocityDriver(this.cumulocityURL, this.accPass, this.accUSER);
     }
 
     private Service[] getAHFServices() {
         ahfBridge.getAll();
+        return null;
     }
 
     private void getCumulocityServices() {
-        cumulocityBridge.getAll();
+        cumulocityDriver.getAll();
     }
 
     public void updateServices() {

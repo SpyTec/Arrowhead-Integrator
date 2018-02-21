@@ -1,9 +1,11 @@
-package bridge;
+package arrowhead_cloud_integrator.ahf_interface;
 
+
+import arrowhead_cloud_integrator.Service;
 
 import java.net.URL;
 
-public class AHFBridge implements Bridge{
+public class AHFBridge{
     private URL authURL;
     private URL sdURL;
 
@@ -12,8 +14,8 @@ public class AHFBridge implements Bridge{
         this.sdURL = sdURL;
     }
 
-    public void getAll() {
-
+    public Service[] getAll() {
+        return null;
     }
 
     public void publish() {
