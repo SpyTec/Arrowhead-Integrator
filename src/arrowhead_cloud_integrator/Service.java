@@ -1,58 +1,60 @@
 package arrowhead_cloud_integrator;
 
-    public class Service {
-    private String domain, host, name, port, type;
+import com.cumulocity.model.idtype.GId;
 
-    public Service(String domain, String host, String name, String port, String type){
-        this.domain = domain;
-        this.host = host;
-        this.name = name;
-        this.port = port;
-        this.type = type;
-    }
+public class Service {
+    private String domain, host, name, port, type, cloudID;
 
     @Override
-    public String toString(){
+    public String toString() {
         return domain + host + name + port + type;
     }
 
-    public String getDomain(){
+    public String getDomain() {
         return this.domain;
     }
 
-    public String getHost(){
+    public String getHost() {
         return this.host;
     }
 
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 
-    public String getPort(){
+    public String getPort() {
         return this.port;
     }
 
-    public String getType(){
+    public String getType() {
         return this.type;
     }
 
-    public void setDomain(String domain){
+    public void setDomain(String domain) {
         this.domain = domain;
     }
 
-    public void setHost(String host){
+    public void setHost(String host) {
         this.host = host;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setPort(String port){
+    public void setPort(String port) {
         this.port = port;
     }
 
-    public void setType(String type){
+    public void setType(String type) {
         this.type = type;
+    }
+
+    public String getCloudID() {
+        return cloudID;
+    }
+
+    public void setCloudID(String cloudID) {
+        this.cloudID = cloudID;
     }
 }

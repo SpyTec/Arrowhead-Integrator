@@ -3,11 +3,13 @@ package arrowhead_cloud_integrator;
 import arrowhead_cloud_integrator.ahf_interface.AhfBridge;
 import arrowhead_cloud_integrator.iot_cloud_drivers.IoTCloudDriver;
 
+import java.util.ArrayList;
+
 public class ServicesModel {
     private AhfBridge ahfBridge;
     private IoTCloudDriver cloudDriver;
-    private Service[] ahfServices;
-    private Service[] iotCloudServices;
+    private ArrayList<Service> ahfServices;
+    private ArrayList<Service> iotCloudServices;
 
 
     public ServicesModel(IoTCloudDriver cloudDriver, AhfBridge ahfBridge) {
@@ -15,17 +17,14 @@ public class ServicesModel {
         this.cloudDriver = cloudDriver;
     }
 
-    private Service[] getAHFServices() {
-        ahfBridge.getAll();
-        return null;
-    }
+    private ArrayList<Service> getAHFServices() { return ahfBridge.getAll(); }
 
-    private void getCumulocityServices() {
-        cloudDriver.getAll();
+    private ArrayList<Service> getCloudServices() {
+        return cloudDriver.getAll();
     }
 
     public void updateServices() {
-        Service[] temp = getAHFServices();
+        ArrayList<Service> temp = getAHFServices();
         for (Service aTemp : temp) {
             for (Service ahfService : ahfServices) {
                 if (aTemp.equals(ahfService)) {
@@ -45,8 +44,8 @@ public class ServicesModel {
         }
     }
 
-    public void compareCumulocity() {
-        getCumulocityServices();
+    public void compareCloudServices() {
+        getCloudServices();
     }
 
     /* Should take a service as argument (NOT STRING) */

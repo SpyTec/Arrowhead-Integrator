@@ -4,6 +4,7 @@ package arrowhead_cloud_integrator.ahf_interface;
 import arrowhead_cloud_integrator.Service;
 
 import java.net.URL;
+import java.util.ArrayList;
 
 public class AhfBridge {
     private URL authURL;
@@ -14,7 +15,7 @@ public class AhfBridge {
         this.sdURL = sdURL;
     }
 
-    public Service[] getAll() {
+    public ArrayList<Service> getAll() {
         return null;
     }
 

@@ -8,28 +8,30 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class Integrator implements Observer{
-    private static Clock clk;
-    private static ServicesModel servicesModel;
-    private static int intervall = 10000; // 10 seconds
-    private static URL sdURL;
-    private static URL authURL;
-    private static URL cumulocityURL;
-    private static String accPass;
-    private static String accUSER;
+    private Clock clk;
+    private ServicesModel servicesModel;
+    private CumulocityDriver cloudDriver;
+    private AhfBridge ahfBridge;
+    private int intervall = 10000; // 10 seconds
+    private URL sdURL;
+    private URL authURL;
+    private String cumulocityURL;
+    private String accPass;
+    private String accUSER;
 
     public static void main(String[] args) {
         Integrator integrator = new Integrator();
     }
 
     public Integrator(){
-        CumulocityDriver cloudDriver = new CumulocityDriver(cumulocityURL, accPass, accUSER);
-        AhfBridge ahfBridge = new AhfBridge(authURL, sdURL);
+        cloudDriver = new CumulocityDriver(cumulocityURL, accPass, accUSER);
+        ahfBridge = new AhfBridge(authURL, sdURL);
         clk = new Clock(intervall, this);
         servicesModel = new ServicesModel(cloudDriver, ahfBridge);
     }
 
     public void update(Observable observable, Object o) {
         servicesModel.updateServices();
-        servicesModel.compareCumulocity();
+        servicesModel.compareCloudServices();
     }
 }
