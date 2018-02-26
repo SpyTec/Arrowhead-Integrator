@@ -1,0 +1,4 @@
+# Cumulocity
+cumulocity_domain=ahf
+cumulocity_username=user
+cumulocity_password=pass

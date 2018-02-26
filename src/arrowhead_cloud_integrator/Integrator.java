@@ -3,9 +3,12 @@ package arrowhead_cloud_integrator;
 import arrowhead_cloud_integrator.ahf_interface.AhfBridge;
 import arrowhead_cloud_integrator.iot_cloud_drivers.CumulocityDriver;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Properties;
 
 public class Integrator implements Observer{
     private Clock clk;
@@ -15,16 +18,31 @@ public class Integrator implements Observer{
     private int intervall = 10000; // 10 seconds
     private URL sdURL;
     private URL authURL;
-    private String cumulocityURL;
-    private String accPass;
-    private String accUSER;
+    private String cumulocityDomain;
+    private String cumulocityUsername;
+    private String cumulocityPassword;
+    public Properties defaultProps;
 
     public static void main(String[] args) {
-        Integrator integrator = new Integrator();
+        try {
+            Integrator integrator = new Integrator();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public Integrator(){
-        cloudDriver = new CumulocityDriver(cumulocityURL, accPass, accUSER);
+    public Integrator() throws IOException{
+
+        defaultProps = new Properties();
+        FileInputStream in = new FileInputStream("integrator.properties");
+        defaultProps.load(in);
+        in.close();
+
+        cumulocityDomain = String.format("https://%s.cumulocity.com", defaultProps.getProperty("cumulocity_domain"));
+        cumulocityUsername = defaultProps.getProperty("cumulocity_username");
+        cumulocityPassword = defaultProps.getProperty("cumulocity_password");
+
+        cloudDriver = new CumulocityDriver(cumulocityDomain, cumulocityPassword, cumulocityUsername);
         ahfBridge = new AhfBridge(authURL, sdURL);
         clk = new Clock(intervall, this);
         servicesModel = new ServicesModel(cloudDriver, ahfBridge);
