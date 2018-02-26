@@ -16,8 +16,8 @@ public class Integrator implements Observer{
     private CumulocityDriver cloudDriver;
     private AhfBridge ahfBridge;
     private int intervall = 10000; // 10 seconds
-    private URL sdURL;
-    private URL authURL;
+    private URL serviceDiscoveryUrl;
+    private URL authorisationUrl;
     private String cumulocityDomain;
     private String cumulocityUsername;
     private String cumulocityPassword;
@@ -42,8 +42,11 @@ public class Integrator implements Observer{
         cumulocityUsername = defaultProps.getProperty("cumulocity_username");
         cumulocityPassword = defaultProps.getProperty("cumulocity_password");
 
+        authorisationUrl = new URL(defaultProps.getProperty("authorisation_url"));
+        serviceDiscoveryUrl = new URL(defaultProps.getProperty("service_discovery_url"));
+
         cloudDriver = new CumulocityDriver(cumulocityDomain, cumulocityPassword, cumulocityUsername);
-        ahfBridge = new AhfBridge(authURL, sdURL);
+        ahfBridge = new AhfBridge(authorisationUrl, serviceDiscoveryUrl);
         clk = new Clock(intervall, this);
         servicesModel = new ServicesModel(cloudDriver, ahfBridge);
     }
