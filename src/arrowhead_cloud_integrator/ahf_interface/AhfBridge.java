@@ -40,15 +40,12 @@ public class AhfBridge {
     public void unpublish(Service s) {
         authRem(s);
         serviceRemove(s);
-
     }
 
     public void update() {
-
     }
 
     private void authReq(){
-
     }
 
     private void serviceReg(Service s){
@@ -70,12 +67,10 @@ public class AhfBridge {
                 "    <type>" + s.getType() + "._tcp</type>\n" +
                 "</service>";
         try {
-            //URL test = new URL(sdURL+"publish");
             router.httpPost( new URL(serviceDiscoveryUrl+"publish"),"application/xml", ServiceString);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private void serviceRemove(Service s){
@@ -87,7 +82,6 @@ public class AhfBridge {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private void authAdd(Service s){
@@ -103,7 +97,6 @@ public class AhfBridge {
                 "    </soapenv:Body>\n" +
                 "</soapenv:Envelope>";
         router.httpPost(authorisationUrl,"text/xml", ServiceString);
-
     }
 
     private void authRem(Service s){

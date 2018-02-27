@@ -37,7 +37,6 @@ public class Service {
     }
 
     public void setName(String name) {
-        System.out.println(name);
         this.name = name;
     }
 
