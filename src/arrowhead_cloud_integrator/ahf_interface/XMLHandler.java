@@ -80,7 +80,10 @@ public class XMLHandler {
                         .item(0).getTextContent());
                 service.setName(eElement
                         .getElementsByTagName("name")
-                        .item(0).getTextContent());
+                        .item(0).getTextContent().replaceAll("."+eElement
+                                .getElementsByTagName("type")
+                                .item(0)
+                                .getTextContent(),"").replaceAll(".srv.docker.ahf.",""));
                 service.setPort(eElement
                         .getElementsByTagName("port")
                         .item(0).getTextContent());

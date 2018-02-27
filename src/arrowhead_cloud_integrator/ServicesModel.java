@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class ServicesModel {
     private AhfBridge ahfBridge;
     private IoTCloudDriver cloudDriver;
-    private ArrayList<Service> services;
+    private ArrayList<Service> services = new ArrayList<Service>();
 
     public ServicesModel(IoTCloudDriver cloudDriver, AhfBridge ahfBridge) {
         this.ahfBridge = ahfBridge;
@@ -26,41 +26,36 @@ public class ServicesModel {
     public void updateServices() {
         ArrayList<Service> ahfServices = getAHFServices();
         ArrayList<Service> cloudServices = getCloudServices();
-
-        // More efficent iteration
-        if (ahfServices.size() > cloudServices.size()) {
-            for (Service cloudService : cloudServices) {
-                boolean exists = false;
-                for (Service ahfService : ahfServices) {
-                    if (cloudService.getName().equals(ahfService.getName())) {
-                        if (!services.contains(cloudService)) {
-                            services.add(cloudService);
-                            exists = true;
-                            break;
-                        }
+        for (Service cloudService : cloudServices) {
+            boolean exists = false;
+            for (Service ahfService : ahfServices) {
+                if (cloudService.getName().equals(ahfService.getName())) {
+                    if (!services.contains(cloudService)) {
+                        exists = true;
+                        break;
                     }
-                }
-                if (!exists) {
-                    ahfBridge.publish(cloudService);
-                    services.add(cloudService);
                 }
             }
-        } else {
-            for (Service ahfService : ahfServices) {
-                boolean exists = false;
-                for (Service cloudService : cloudServices) {
-                    if (cloudService.getName().equals(ahfService.getName())) {
-                        if (!services.contains(ahfService)) {
-                            services.add(ahfService);
-                            exists = true;
-                            break;
-                        }
+            if (!exists) {
+                System.out.println("Adding to AHF");
+                ahfBridge.publish(cloudService);
+                services.add(cloudService);
+            }
+        }
+        for (Service ahfService : ahfServices) {
+            boolean exists = false;
+            for (Service cloudService : cloudServices) {
+                if (cloudService.getName().equals(ahfService.getName())) {
+                    if (!services.contains(ahfService)) {
+                        exists = true;
+                        break;
                     }
                 }
-                if (!exists) {
-                    cloudDriver.publish(ahfService);
-                    services.add(ahfService);
-                }
+            }
+            if (!exists) {
+                System.out.println("Adding to Cloud");
+                cloudDriver.publish(ahfService);
+                services.add(ahfService);
             }
         }
 

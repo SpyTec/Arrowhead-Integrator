@@ -3,7 +3,6 @@ package arrowhead_cloud_integrator;
 public class Service {
     private String domain, host, name, port, type, cloudID;
     private boolean hasBeenPublishedToAhf, hasBeenPublishedToCloud;
-
     @Override
     public String toString() {
         return domain + host + name + port + type;
@@ -38,6 +37,7 @@ public class Service {
     }
 
     public void setName(String name) {
+        System.out.println(name);
         this.name = name;
     }
 

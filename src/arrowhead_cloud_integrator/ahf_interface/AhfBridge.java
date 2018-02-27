@@ -67,7 +67,7 @@ public class AhfBridge {
                 "       <value>hello</value>\n" +
                 "    </property>\n" +
                 "    </properties>\n" +
-                "    <type>" + s.getType() + "</type>\n" +
+                "    <type>" + s.getType() + "._tcp</type>\n" +
                 "</service>";
         try {
             //URL test = new URL(sdURL+"publish");
