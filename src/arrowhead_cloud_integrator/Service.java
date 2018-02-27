@@ -1,7 +1,5 @@
 package arrowhead_cloud_integrator;
 
-import com.cumulocity.model.idtype.GId;
-
 public class Service {
     private String domain, host, name, port, type, cloudID;
 

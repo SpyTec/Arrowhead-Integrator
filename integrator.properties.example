@@ -4,5 +4,5 @@ cumulocity_username=user
 cumulocity_password=pass
 
 # Arrowhead
-authorisation_url=http://127.0.0.1:8045/servicediscovery
-service_discovery_url=https://glassfish.docker.ahf:8181/authorisation-control
+authorisation_url=https://glassfish.docker.ahf:8181/authorisation-control
+service_discovery_url=http://127.0.0.1:8045/servicediscovery/

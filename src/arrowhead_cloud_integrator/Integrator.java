@@ -52,7 +52,8 @@ public class Integrator implements Observer{
     }
 
     public void update(Observable observable, Object o) {
-        servicesModel.updateServices();
-        servicesModel.compareCloudServices();
+        //servicesModel.updateServices();
+        //servicesModel.compareCloudServices();
+        ahfBridge.getAll();
     }
 }
