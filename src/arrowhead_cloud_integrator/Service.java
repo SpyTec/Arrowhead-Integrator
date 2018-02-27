@@ -2,6 +2,7 @@ package arrowhead_cloud_integrator;
 
 public class Service {
     private String domain, host, name, port, type, cloudID;
+    private boolean hasBeenPublishedToAhf, hasBeenPublishedToCloud;
 
     @Override
     public String toString() {
@@ -54,5 +55,21 @@ public class Service {
 
     public void setCloudID(String cloudID) {
         this.cloudID = cloudID;
+    }
+
+    public boolean isHasBeenPublishedToAhf() {
+        return hasBeenPublishedToAhf;
+    }
+
+    public void setHasBeenPublishedToAhf(boolean hasBeenPublishedToAhf) {
+        this.hasBeenPublishedToAhf = hasBeenPublishedToAhf;
+    }
+
+    public boolean isHasBeenPublishedToCloud() {
+        return hasBeenPublishedToCloud;
+    }
+
+    public void setHasBeenPublishedToCloud(boolean hasBeenPublishedToCloud) {
+        this.hasBeenPublishedToCloud = hasBeenPublishedToCloud;
     }
 }

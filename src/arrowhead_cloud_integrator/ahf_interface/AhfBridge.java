@@ -24,10 +24,7 @@ public class AhfBridge {
     public ArrayList<Service> getAll() {
 
         try {
-            ArrayList<Service> test = handler.dataParser(handler.strToDoc(router.httpGet(new URL (serviceDiscoveryUrl + "service"))));
-            System.out.println(test);
-            return test;
-            //return handler.dataParser(handler.strToDoc(router.httpGet(new URL (serviceDiscoveryUrl + "service"))));
+            return handler.dataParser(handler.strToDoc(router.httpGet(new URL (serviceDiscoveryUrl + "service"))));
         } catch (IOException e) {
             e.printStackTrace();
         }

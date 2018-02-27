@@ -88,6 +88,7 @@ public class XMLHandler {
                         .getElementsByTagName("type")
                         .item(0)
                         .getTextContent());
+                service.setHasBeenPublishedToAhf(true);
                 services.add(service);
             }
         }

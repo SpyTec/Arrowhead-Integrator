@@ -106,6 +106,7 @@ public class CumulocityDriver implements IoTCloudDriver {
         service.setPort(mo.get("port").toString());
         service.setName(mo.getName());
         service.setType(mo.getType());
+        service.setHasBeenPublishedToCloud(true);
         return service;
     }
 }
