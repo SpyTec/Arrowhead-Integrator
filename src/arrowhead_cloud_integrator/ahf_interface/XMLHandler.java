@@ -60,7 +60,6 @@ public class XMLHandler {
     public ArrayList<Service> dataParser(Document doc){
 
         NodeList nList = doc.getElementsByTagName("service");
-        System.out.println("----------------------------");
         ArrayList<Service>  services = new ArrayList<Service>();
 
         for (int temp = 0; temp < nList.getLength(); temp++) {

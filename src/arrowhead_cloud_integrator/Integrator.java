@@ -15,7 +15,7 @@ public class Integrator implements Observer{
     private ServicesModel servicesModel;
     private CumulocityDriver cloudDriver;
     private AhfBridge ahfBridge;
-    private int intervall = 40000; // 40 seconds
+    private int intervall = 20000; // 20 seconds
     private URL serviceDiscoveryUrl;
     private URL authorisationUrl;
     private String cumulocityDomain;
@@ -52,6 +52,7 @@ public class Integrator implements Observer{
     }
 
     public void update(Observable observable, Object o) {
+        System.out.println("----------Clock-Cycle----------");
         servicesModel.updateServices();
     }
 }

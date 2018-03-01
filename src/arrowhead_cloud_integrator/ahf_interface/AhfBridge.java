@@ -48,6 +48,10 @@ public class AhfBridge {
     private void authReq(){
     }
 
+    /**
+     *
+     * @param s
+     */
     private void serviceReg(Service s){
         String ServiceString = "<service> \n" +
                 "    <domain>" + s.getDomain() + "</domain>\n" +
