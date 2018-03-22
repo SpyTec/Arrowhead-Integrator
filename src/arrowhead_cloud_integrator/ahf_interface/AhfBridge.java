@@ -9,22 +9,43 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+/**
+ * Bridge to establish CRUD with Ahf.
+ */
 public class AhfBridge {
+    /**
+     * URL for authorising with Ahf
+     */
     private URL authorisationUrl;
+    /**
+     * URL for Ahf Service Discovery
+     */
     private URL serviceDiscoveryUrl;
+    /**
+     * Router for managing connection with Ahf
+     */
     private AhfRouter router = new AhfRouter();
+    /**
+     * XML handler to format response and requests with Ahf.
+     */
     private XMLHandler handler = new XMLHandler();
 
-    public AhfBridge(URL authURL, URL sdURL){
+    /**
+     * @param authURL Authorisation URL.
+     * @param sdURL   Service Discovery URL.
+     */
+    public AhfBridge(URL authURL, URL sdURL) {
         this.authorisationUrl = authURL;
         this.serviceDiscoveryUrl = sdURL;
     }
 
-
+    /**
+     * @return list of all Ahf services, null if empty.
+     */
     public ArrayList<Service> getAll() {
 
         try {
-            return handler.dataParser(handler.strToDoc(router.httpGet(new URL (serviceDiscoveryUrl + "service"))));
+            return handler.dataParser(handler.strToDoc(router.httpGet(new URL(serviceDiscoveryUrl + "service"))));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,27 +53,33 @@ public class AhfBridge {
         return null;
     }
 
+    /**
+     * Publish a service to AHF.
+     *
+     * @param s service to publish.
+     */
     public void publish(Service s) {
         authAdd(s);
         serviceReg(s);
     }
 
+    /**
+     * Unpublish a service.
+     *
+     * @param s service to unpublish.
+     */
     public void unpublish(Service s) {
         authRem(s);
         serviceRemove(s);
     }
 
-    public void update() {
-    }
-
-    private void authReq(){
-    }
-
     /**
+     * Register a new service on AHF.
      *
-     * @param s
+     * @param s service to register.
      */
-    private void serviceReg(Service s){
+    private void serviceReg(Service s) {
+        // Format to XML to send to AHF
         String ServiceString = "<service> \n" +
                 "    <domain>" + s.getDomain() + "</domain>\n" +
                 "    <host>" + s.getHost() + "</host>\n" +
@@ -71,24 +98,34 @@ public class AhfBridge {
                 "    <type>" + s.getType() + "._tcp</type>\n" +
                 "</service>";
         try {
-            router.httpPost( new URL(serviceDiscoveryUrl+"publish"),"application/xml", ServiceString);
+            router.httpPost(new URL(serviceDiscoveryUrl + "publish"), "application/xml", ServiceString);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void serviceRemove(Service s){
+    /**
+     * Remove service from Ahf.
+     *
+     * @param s service to remove.
+     */
+    private void serviceRemove(Service s) {
         String ServiceString = "<service>\n" +
                 "    <name>" + s.getName() + "</name>\n" +
                 "</service>";
         try {
-            router.httpPost( new URL(serviceDiscoveryUrl+"unpublish"),"application/xml", ServiceString);
+            router.httpPost(new URL(serviceDiscoveryUrl + "unpublish"), "application/xml", ServiceString);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void authAdd(Service s){
+    /**
+     * Add authorization rule to Ahf for specific service.
+     *
+     * @param s service to add authorization rule for.
+     */
+    private void authAdd(Service s) {
         String ServiceString = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
                 "                  xmlns:aut=\"http://arrowhead.eu/authorisation\">\n" +
                 "    <soapenv:Header/>\n" +
@@ -100,10 +137,15 @@ public class AhfBridge {
                 "        </aut:addAuthorisationRule>\n" +
                 "    </soapenv:Body>\n" +
                 "</soapenv:Envelope>";
-        router.httpPost(authorisationUrl,"text/xml", ServiceString);
+        router.httpPost(authorisationUrl, "text/xml", ServiceString);
     }
 
-    private void authRem(Service s){
+    /**
+     * Remove authorization rule for specific service.
+     *
+     * @param s service to remove authorization rule for.
+     */
+    private void authRem(Service s) {
         String ServiceString = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n" +
                 "                  xmlns:aut=\"http://arrowhead.eu/authorisation\">\n" +
                 "<soapenv:Header/>\n" +
@@ -115,6 +157,6 @@ public class AhfBridge {
                 "        </aut:removeAuthorisationRule>\n" +
                 "    </soapenv:Body>\n" +
                 "</soapenv:Envelope>";
-        router.httpPost(authorisationUrl,"text/xml", ServiceString);
+        router.httpPost(authorisationUrl, "text/xml", ServiceString);
     }
 }

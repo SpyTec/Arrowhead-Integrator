@@ -19,12 +19,21 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 
+/**
+ * XML Handler and formatter for AHF.
+ */
 public class XMLHandler {
 
     public void XMLHandler(){
 
     }
 
+    /**
+     * Transform Document to string.
+     *
+     * @param doc Doc to be transformed.
+     * @return string of the document.
+     */
     public String docToString(Document doc){
         TransformerFactory tf = TransformerFactory.newInstance();
         Transformer transformer;
@@ -42,6 +51,12 @@ public class XMLHandler {
     }
 
 
+    /**
+     * Generate a Document from a string
+     *
+     * @param xmlStr string to transform to Document
+     * @return Formatted Document
+     */
     public Document strToDoc(String xmlStr){
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;
@@ -56,7 +71,12 @@ public class XMLHandler {
         return null;
     }
 
-    /* Fix ArrayList here */
+    /**
+     * Parse Document to extract a list of Service instances.
+     *
+     * @param doc Document to extract services from.
+     * @return List of services extracted.
+     */
     public ArrayList<Service> dataParser(Document doc){
 
         NodeList nList = doc.getElementsByTagName("service");

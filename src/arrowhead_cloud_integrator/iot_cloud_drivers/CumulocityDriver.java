@@ -14,13 +14,36 @@ import com.cumulocity.sdk.client.inventory.ManagedObjectCollection;
 
 import java.util.ArrayList;
 
+/**
+ * Driver to manage Cumulocity CRUD.
+ */
 public class CumulocityDriver implements IoTCloudDriver {
+    /**
+     * URL of account specific domain.
+     */
     private String cumulocityURL;
+    /**
+     * Password credentials.
+     */
     private String accPass;
+    /**
+     * Username credentials.
+     */
     private String accUser;
+    /**
+     * Cumulocity Platform SDK for receiving APIs.
+     */
     private Platform platform;
+    /**
+     * API to manage and register devices on Cumulocity.
+     */
     private InventoryApi inventory;
 
+    /**
+     * @param cumulocityURL URL of account specific Cumulocity domain.
+     * @param accPass Password for Cumulocity account
+     * @param accUser Username for Cumulocity account
+     */
     public CumulocityDriver(String cumulocityURL, String accPass, String accUser){
         this.cumulocityURL = cumulocityURL;
         this.accPass = accPass;
@@ -32,8 +55,7 @@ public class CumulocityDriver implements IoTCloudDriver {
 
 
     /**
-     * Tested, works
-     * @return
+     * {@inheritDoc}
      */
     public ArrayList<Service> getAll() {
         ArrayList<Service> services = new ArrayList<Service>();
@@ -48,9 +70,7 @@ public class CumulocityDriver implements IoTCloudDriver {
     }
 
     /**
-     * Tested, works.
-     * @param service
-     * @return
+     * {@inheritDoc}
      */
     public boolean publish(Service service) {
         ManagedObjectRepresentation mo = new ManagedObjectRepresentation();
@@ -71,9 +91,7 @@ public class CumulocityDriver implements IoTCloudDriver {
 
 
     /**
-     * Tested, works.
-     * @param service
-     * @return
+     * {@inheritDoc}
      */
     public boolean unpublish(Service service) {
         if(service.getCloudID() != null) {
@@ -89,15 +107,19 @@ public class CumulocityDriver implements IoTCloudDriver {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean update(Service service) {
         return false;
     }
 
 
     /**
-     * Tested, works.
-     * @param mo
-     * @return
+     * Parse a Cumulocity Managed Object to a Service
+     *
+     * @param mo ManagedObjectRepresentation to parse
+     * @return Parsed Service
      */
     private Service parseService(ManagedObjectRepresentation mo){
         Service service = new Service();

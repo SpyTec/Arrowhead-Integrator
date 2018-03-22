@@ -5,19 +5,24 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
+/**
+ * Router to manage connections to Ahf.
+ */
 public class AhfRouter {
 
-
-    public void AhfRouter(){
-
-    }
-
-    public void httpPost(URL endpoint, String xmlType, String xmlString){
+    /**
+     * Post request to Ahf.
+     *
+     * @param endpoint  Endpoint to post to
+     * @param xmlType   Type of XML media type
+     * @param xmlString XML in string format to post
+     */
+    public void httpPost(URL endpoint, String xmlType, String xmlString) {
         HttpURLConnection connection;
         try {
             connection = (HttpURLConnection) endpoint.openConnection();
 
-        connection.setRequestMethod("POST");
+            connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", xmlType);
             connection.setDoOutput(true);
 
@@ -28,24 +33,31 @@ public class AhfRouter {
             wr.writeBytes(xmlString);
             wr.close();
 
-        System.out.println("response code: " + connection.getResponseCode());
+            System.out.println("response code: " + connection.getResponseCode());
 
-        InputStream is = connection.getInputStream();
-        BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-        StringBuilder response = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            response.append(line);
-            response.append(System.lineSeparator());
-        }
-        rd.close();
+            InputStream is = connection.getInputStream();
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = rd.readLine()) != null) {
+                response.append(line);
+                response.append(System.lineSeparator());
+            }
+            rd.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    public String httpGet(URL endpoint) throws IOException{
+    /**
+     * Get request to Ahf.
+     *
+     * @param endpoint Endpoint to get from.
+     * @return String of returned XML.
+     * @throws IOException if reader cannot read.
+     */
+    public String httpGet(URL endpoint) throws IOException {
         StringBuilder result = new StringBuilder();
         URL url = endpoint;
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
